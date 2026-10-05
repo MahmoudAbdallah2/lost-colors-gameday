@@ -1,0 +1,15 @@
+# Secrets
+.env.local
+
+# CDK build artifacts
+cdk/cdk.out/
+cdk/dist/
+cdk/node_modules/
+
+# CLI internals and staging
+.cli/*
+.cache/*
+
+# Preserve the empty deployment-state file
+!.cli/deployed-state.json
+

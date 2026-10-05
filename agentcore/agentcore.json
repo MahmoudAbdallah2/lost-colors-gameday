@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "LostColors",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "LostColors"
+  },
+  "runtimes": [
+    {
+      "name": "multimodal_data_agent",
+      "build": "Container",
+      "entrypoint": "multimodal_data_agent.py",
+      "codeLocation": "./agent",
+      "dockerfile": "Dockerfile",
+      "runtimeVersion": "PYTHON_3_11",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/LostColors",
+      "instrumentation": {
+        "enableOtel": false
+      }
+    },
+    {
+      "name": "bedrock_data_automation_mcp",
+      "build": "Container",
+      "entrypoint": "server.py",
+      "codeLocation": "./tools/bedrock-data-automation",
+      "dockerfile": "Dockerfile",
+      "runtimeVersion": "PYTHON_3_11",
+      "networkMode": "PUBLIC",
+      "protocol": "MCP",
+      "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/LostColors",
+      "envVars": [
+        {
+          "name": "AWS_BUCKET_NAME",
+          "value": "YOUR_BDA_BUCKET_NAME"
+        }
+      ],
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.YOUR_REGION.amazonaws.com/YOUR_RUNTIME_USER_POOL_ID/.well-known/openid-configuration",
+          "allowedClients": [
+            "YOUR_RUNTIME_CLIENT_ID"
+          ]
+        }
+      },
+      "instrumentation": {
+        "enableOtel": false
+      }
+    },
+    {
+      "name": "location_service_mcp",
+      "build": "Container",
+      "entrypoint": "server.py",
+      "codeLocation": "./tools/location-service",
+      "dockerfile": "Dockerfile",
+      "runtimeVersion": "PYTHON_3_11",
+      "networkMode": "PUBLIC",
+      "protocol": "MCP",
+      "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/LostColors",
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.YOUR_REGION.amazonaws.com/YOUR_RUNTIME_USER_POOL_ID/.well-known/openid-configuration",
+          "allowedClients": [
+            "YOUR_RUNTIME_CLIENT_ID"
+          ]
+        }
+      },
+      "instrumentation": {
+        "enableOtel": false
+      }
+    }
+  ],
+  "memories": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": []
+}
+
