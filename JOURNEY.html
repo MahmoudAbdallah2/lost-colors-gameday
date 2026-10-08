@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Legend of Lost Colors — Our Journey</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card-border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f778ba;
+    --accent3: #3fb950;
+    --accent4: #d29922;
+    --accent5: #a371f7;
+    --danger: #f85149;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #1b2430 0%, var(--bg) 55%);
+    color: var(--text);
+    padding: 40px 24px 80px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 48px; }
+  header h1 {
+    font-size: 2.4rem;
+    margin: 0 0 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent4), var(--accent3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p { color: var(--muted); font-size: 1.05rem; margin: 0; }
+  .status-bar {
+    display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .pill {
+    padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--card-border); background: var(--card); color: var(--muted);
+  }
+  .pill.done { color: var(--accent3); border-color: var(--accent3); }
+  .pill.active { color: var(--accent4); border-color: var(--accent4); }
+
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 1.3rem; border-left: 4px solid var(--accent); padding-left: 12px; margin-bottom: 20px;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 12px;
+    padding: 18px 20px; position: relative; overflow: hidden;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.02rem; display: flex; align-items: center; gap: 8px; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+  .card .tag {
+    display: inline-block; margin-top: 10px; font-size: 0.72rem; padding: 2px 8px;
+    border-radius: 6px; background: rgba(88,166,255,0.12); color: var(--accent);
+  }
+
+  .diagram {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 12px;
+    padding: 24px; overflow-x: auto;
+  }
+  .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .node {
+    background: #0d1117; border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 12px 16px; font-size: 0.85rem; text-align: center; min-width: 140px;
+  }
+  .node.accent { border-color: var(--accent); color: var(--accent); }
+  .node.accent2 { border-color: var(--accent2); color: var(--accent2); }
+  .node.accent3 { border-color: var(--accent3); color: var(--accent3); }
+  .arrow { color: var(--muted); font-size: 1.3rem; }
+
+  .timeline { border-left: 2px solid var(--card-border); margin-left: 12px; padding-left: 24px; }
+  .entry { position: relative; margin-bottom: 28px; }
+  .entry::before {
+    content: ""; position: absolute; left: -31px; top: 4px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--muted); border: 2px solid var(--bg);
+  }
+  .entry.done::before { background: var(--accent3); }
+  .entry.active::before { background: var(--accent4); }
+  .entry h3 { margin: 0 0 4px; font-size: 1rem; }
+  .entry .when { color: var(--muted); font-size: 0.78rem; margin-bottom: 6px; }
+  .entry p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+  .entry ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.85rem; }
+  .entry code {
+    background: #0d1117; border: 1px solid var(--card-border); padding: 1px 6px; border-radius: 4px;
+    font-size: 0.82rem; color: var(--accent);
+  }
+
+  .glossary dt { color: var(--accent); font-weight: 600; margin-top: 14px; }
+  .glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+  table.portability { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  table.portability th, table.portability td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--card-border);
+  }
+  table.portability th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  table.portability td.step { color: var(--text); }
+  table.portability td.flag.yes { color: var(--accent4); font-weight: 600; }
+  table.portability td.flag.no { color: var(--accent3); font-weight: 600; }
+  table.portability td.note { color: var(--muted); }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 60px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎨 The Legend of Lost Colors</h1>
+    <p>Our personal journey through an AWS GameDay quest — Bedrock AgentCore, multimodal agents &amp; MCP tools</p>
+    <div class="status-bar">
+      <span class="pill done">✅ Repo mapped to personal GitHub</span>
+      <span class="pill active">🔧 AWS credentials refresh</span>
+      <span class="pill">⬜ IAM role</span>
+      <span class="pill">⬜ Identity (Cognito)</span>
+      <span class="pill">⬜ AgentCore deploy</span>
+      <span class="pill">⬜ Frontend run</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>What is this quest?</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>🧩 The Goal</h3>
+        <p>Build and deploy a <strong>multimodal AI agent</strong> that can reason over text, images, and documents, and call out to external tools (data extraction + location/maps) through a secured gateway.</p>
+      </div>
+      <div class="card">
+        <h3>🧠 The Brain</h3>
+        <p>A <strong>Strands Agent</strong> backed by an Anthropic Claude model on <strong>Amazon Bedrock</strong>, running inside <strong>Bedrock AgentCore Runtime</strong> (a managed, containerized agent host).</p>
+      </div>
+      <div class="card">
+        <h3>🔌 The Hands</h3>
+        <p>Two <strong>MCP (Model Context Protocol) servers</strong> exposed as tools: one for Bedrock Data Automation (document/image/video analysis) and one for Amazon Location Service (places, routes, geocoding).</p>
+      </div>
+      <div class="card">
+        <h3>🔐 The Guard</h3>
+        <p>Everything is wired together with <strong>OAuth2 M2M (machine-to-machine) auth</strong> via Amazon Cognito, and locked down with a dedicated <strong>IAM execution role</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Architecture at a glance</h2>
+    <div class="diagram">
+      <div class="flow">
+        <div class="node accent">Streamlit UX<br><small>(UX/app.py)</small></div>
+        <div class="arrow">→</div>
+        <div class="node">AgentCore Runtime<br><small>multimodal_data_agent</small></div>
+        <div class="arrow">→</div>
+        <div class="node accent2">AgentCore Gateway<br><small>JWT via Cognito</small></div>
+        <div class="arrow">→</div>
+        <div class="node accent3">MCP Tool Servers<br><small>Bedrock Data Automation · Location Service</small></div>
+      </div>
+      <div class="flow" style="margin-top:20px;">
+        <div class="node">Amazon Bedrock<br><small>Claude Sonnet model</small></div>
+        <div class="arrow">↔</div>
+        <div class="node">IAM Role: LostColors<br><small>Execution permissions</small></div>
+        <div class="arrow">↔</div>
+        <div class="node">Cognito User Pools<br><small>agent→gateway · gateway→runtime</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key AI/Cloud concepts to learn here</h2>
+    <dl class="glossary">
+      <dt>Bedrock AgentCore</dt>
+      <dd>AWS's managed hosting layer for agents: it runs your agent code as a container ("Runtime"), and can front multiple tool servers behind a single secured "Gateway".</dd>
+
+      <dt>MCP (Model Context Protocol)</dt>
+      <dd>An open standard letting an LLM-based agent discover and call external "tools" (functions) over a standard protocol — here, HTTP/streamable MCP servers expose <code>getprojects</code>, <code>analyzeasset</code>, <code>search_places</code>, etc.</dd>
+
+      <dt>Strands Agents SDK</dt>
+      <dd>A Python framework (<code>strands</code>) for building model-driven agents: you give it a <code>BedrockModel</code>, a list of <code>tools</code>, and a system prompt, then stream responses.</dd>
+
+      <dt>M2M OAuth flow</dt>
+      <dd>"Machine to machine" — no human login. The agent runtime authenticates itself to the Gateway using a Cognito app client's own credentials (client id/secret) to get a JWT access token.</dd>
+
+      <dt>Custom JWT Authorizer</dt>
+      <dd>AgentCore runtimes can require a valid JWT (issued by Cognito) on every inbound call, validated against a discovery URL + allowed client ids — this is how the Gateway and MCP servers reject unauthenticated calls.</dd>
+
+      <dt>Multimodal payloads</dt>
+      <dd>The agent accepts a mix of <code>text</code>, base64-encoded <code>images</code>, and <code>documents</code> in one request, converting them into Bedrock's content-block format.</dd>
+
+      <dt>Bedrock Data Automation (BDA)</dt>
+      <dd>A managed AWS service that extracts structured insights from unstructured files (PDFs, images, video, audio) — exposed here as MCP tools.</dd>
+
+      <dt>Amazon Location Service</dt>
+      <dd>Geo/mapping APIs (geo-places, geo-routes) for search, geocoding and routing — exposed as MCP tools so the agent can reason about places.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Concepts deep-dive: Runtime vs. Gateway vs. MCP vs. Strands</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>🏃 AgentCore Runtime</h3>
+        <p>Where the agent's own code lives and runs — a container AWS builds from your <code>Dockerfile</code> and auto-scales. It receives the user prompt and decides what to do.</p>
+      </div>
+      <div class="card">
+        <h3>🚪 AgentCore Gateway</h3>
+        <p>A single secured front door exposing one or more MCP tool servers to any authorized runtime. Centralizes auth so tools don't each need their own.</p>
+      </div>
+      <div class="card">
+        <h3>🔧 MCP (Model Context Protocol)</h3>
+        <p>A standard for exposing typed "tools" (functions) to an agent. The agent calls <code>list_tools()</code> to get a menu, then invokes any tool by name — no hand-written per-tool glue code.</p>
+      </div>
+      <div class="card">
+        <h3>🧵 Strands Agents SDK</h3>
+        <p>The Python framework tying a Bedrock model + tool list + system prompt into a step-by-step reasoner that can decide "call a tool" vs. "answer directly" and stream output.</p>
+      </div>
+      <div class="card">
+        <h3>🔑 Cognito M2M (machine-to-machine)</h3>
+        <p>No human login — the runtime authenticates to the Gateway as a Cognito app client (client id + secret) via the client-credentials grant, getting a short-lived JWT.</p>
+      </div>
+      <div class="card">
+        <h3>🛡️ Custom JWT Authorizer</h3>
+        <p>Gateway/MCP servers validate that JWT against a discovery URL + allowed client id list before letting the call through — separate from IAM, which governs AWS API access.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What's machine-specific vs. portable</h2>
+    <div class="diagram">
+      <table class="portability">
+        <thead>
+          <tr><th>Step</th><th>Redo on a new machine?</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="step">AWS credentials (<code>~/.aws/credentials</code>)</td><td class="flag yes">Yes</td><td class="note">Temporary GameDay creds expire; re-fetch from the event portal wherever you are.</td></tr>
+          <tr><td class="step"><code>agentcore</code> CLI install (npm)</td><td class="flag yes">Yes</td><td class="note">Needs Node 20+; reinstall per machine.</td></tr>
+          <tr><td class="step">Python venv + <code>pip install -r requirements.txt</code></td><td class="flag yes">Yes</td><td class="note">Standard local dependency setup, not shared state.</td></tr>
+          <tr><td class="step"><code>IAM-setup.py</code> (creates <code>LostColors</code> role)</td><td class="flag no">No</td><td class="note">The role lives in the AWS account, not on disk — only needed once per account.</td></tr>
+          <tr><td class="step"><code>identity_setup.py</code> (Cognito pools)</td><td class="flag no">No</td><td class="note">AWS resources, same account across machines.</td></tr>
+          <tr><td class="step"><code>agentcore/agentcore.json</code> placeholders</td><td class="flag no">No</td><td class="note">Committed to git — a fresh clone already has them filled in.</td></tr>
+          <tr><td class="step"><code>agentcore deploy</code></td><td class="flag no">No*</td><td class="note">*Re-runnable from any machine, as long as CLI is installed and creds are valid.</td></tr>
+          <tr><td class="step">Streamlit frontend (<code>UX/</code>)</td><td class="flag yes">Yes</td><td class="note">Just a local dev server hitting the deployed runtime via AWS APIs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Our progress log</h2>
+    <div class="timeline">
+      <div class="entry done">
+        <h3>1. Explored the repo</h3>
+        <div class="when">Session 1</div>
+        <p>Read through <code>readme.md</code>, <code>IAM-setup.py</code>, <code>agent/multimodal_data_agent.py</code>, <code>identity/identity_setup.py</code>, the two MCP <code>server.py</code> files, <code>agentcore/agentcore.json</code>, and the Streamlit <code>UX/app.py</code> to map the full architecture.</p>
+      </div>
+      <div class="entry done">
+        <h3>2. Connected personal GitHub</h3>
+        <div class="when">Session 1</div>
+        <p>Kept the existing <code>origin</code> remote (Gitea, used for GameDay grading) untouched, and added a second remote <code>github</code> pointing to a brand-new personal repo, then pushed <code>main</code>.</p>
+        <ul>
+          <li>Repo: <a href="https://github.com/MahmoudAbdallah2/lost-colors-gameday" style="color:var(--accent)">MahmoudAbdallah2/lost-colors-gameday</a></li>
+          <li><code>git remote -v</code> now shows both <code>origin</code> (gitea) and <code>github</code> (personal)</li>
+        </ul>
+      </div>
+      <div class="entry active">
+        <h3>3. Refresh AWS credentials</h3>
+        <div class="when">In progress</div>
+        <p>The quest account's temporary credentials in <code>~/.aws/credentials</code> expired. Getting fresh team-account credentials from the GameDay portal (Workshop Studio / Event Engine) before anything AWS-side can run.</p>
+      </div>
+      <div class="entry done">
+        <h3>3b. Learned the concepts &amp; portability model</h3>
+        <div class="when">Session 2</div>
+        <p>Walked through Runtime vs. Gateway vs. MCP vs. Strands, why Cognito M2M + Custom JWT Authorizer exist separately from IAM, and which setup steps are per-account (one-time) vs. per-machine (repeat on any new laptop) — captured above in permanent reference sections.</p>
+      </div>
+      <div class="entry">
+        <h3>4. Create the IAM role</h3>
+        <p>Run <code>python3 IAM-setup.py</code> to create the <code>LostColors</code> execution role used by every AgentCore resource.</p>
+      </div>
+      <div class="entry">
+        <h3>5. Set up OAuth identity providers</h3>
+        <p>Run <code>identity/identity_setup.py</code> to create the two Cognito user pools (agent→gateway, gateway→runtime) and capture their client id/secret + discovery URLs.</p>
+      </div>
+      <div class="entry">
+        <h3>6. Fill in the project placeholders</h3>
+        <p>Replace the <code>YOUR_*</code> placeholders in <code>agentcore/agentcore.json</code> and the <code>&lt;TODO&gt;</code> markers in <code>agent/multimodal_data_agent.py</code> (gateway token provider, MCP/Gateway URL, system prompt).</p>
+      </div>
+      <div class="entry">
+        <h3>7. Validate &amp; deploy with AgentCore CLI</h3>
+        <p><code>agentcore validate</code> → <code>agentcore deploy</code> → <code>agentcore status</code> for each of the three runtimes.</p>
+      </div>
+      <div class="entry">
+        <h3>8. Run the Streamlit frontend</h3>
+        <p>From <code>UX/</code>, install deps with <code>uv</code> and run <code>streamlit run app.py</code> to chat with the deployed agent end-to-end.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Living document — regenerated/updated as we progress through the quest. Last updated: 2026-10-08.</footer>
+</div>
+</body>
+</html>
